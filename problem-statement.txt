@@ -1,0 +1,81 @@
+Title: Build a Simple Book Library Backend using Node.js and REST APIs
+
+Objective:
+Create a backend server using Node.js that exposes RESTful APIs to manage a collection of books. The system should support basic CRUD operations and allow filtering of data. The data will be stored in memory (not in a database), meaning it will reset when the server restarts.
+
+Functional Requirements:
+
+1. Data Model:
+
+   * Each book should have the following fields:
+
+     * id (unique identifier)
+     * title
+     * author
+     * genre
+     * year
+     * rating
+     * available (boolean)
+
+2. API Endpoints:
+
+   a. GET /books
+
+   * Return all books
+   * Support optional query filters:
+
+     * genre
+     * author
+     * available
+
+   b. GET /books/{id}
+
+   * Return a single book by ID
+   * If not found, return appropriate error
+
+   c. POST /books
+
+   * Create a new book
+   * ID should be auto-generated
+   * Validate required fields (title, author)
+
+   d. PUT /books/{id}
+
+   * Replace the entire book object
+   * All fields should be updated
+
+   e. PATCH /books/{id}
+
+   * Partially update a book
+   * Only provided fields should change
+
+   f. DELETE /books/{id}
+
+   * Remove a book from the collection
+
+3. Behavior Requirements:
+
+   * Data should be stored in an in-memory array
+   * Changes should reflect immediately
+   * No persistence required after restart
+
+4. Error Handling:
+
+   * Return meaningful messages for:
+
+     * Invalid input
+     * Missing book
+   * Use proper HTTP status codes (200, 201, 400, 404)
+
+5. Testing:
+
+   * APIs should be testable using tools like Postman or curl
+
+Non-Functional Requirements:
+
+* Keep implementation simple and readable
+* Focus on understanding backend flow rather than optimization
+* Follow REST principles
+
+End Goal:
+A working backend server that can handle real API requests and demonstrate understanding of routing, request handling, and data manipulation.

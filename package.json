@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/CodeSagePath/books-server/issues"
   },
-  "homepage": "https://github.com/CodeSagePath/books-server#readme"
+  "homepage": "https://github.com/CodeSagePath/books-server#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "nodemon": "^3.1.14"
+  }
 }

@@ -138,6 +138,17 @@ app.post("/books", (req, res) => {
   return res.status(201).send(newBook);
 });
 
+// GET a Book by ID
+app.get("/books/:id", (req, res) => {
+  const book = books.find((elem) => elem.id === Number(req.params.id));
+
+  if (!book) {
+    return res.status(404).send({ error: "Book not found" });
+  }
+
+  return res.status(200).send(book);
+});
+
 // Starting the server
 app.listen(PORT, HOSTNAME, () => {
   console.log(`Server is running at http://${HOSTNAME}:${PORT}/`);

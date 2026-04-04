@@ -84,17 +84,22 @@ const books = [
 
 // GET all Books
 app.get("/books", (req, res) => {
-  if (Object.keys(req.query).length === 0) {
+  if (Object.keys(req.query).length === 0) { // If there are no query parameters, return all books
     return res.status(200).send(books);
-  } else {
+  } else { // If there are query parameters, filter the books based on the parameters
     const filteredBooks = books.filter((book) => {
       for (let key in req.query) {
+        // Check if the book has the key and if its value matches the query parameter
         if (book[key] === undefined || book[key].toString() !== req.query[key]) {
           return false;
         }
       }
+
+      // If all query parameters match, include the book in the filtered results
       return true;
     });
+
+    // Return the filtered books
     return res.status(200).send(filteredBooks);
   }
 });

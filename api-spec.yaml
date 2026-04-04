@@ -75,24 +75,6 @@ paths:
         '200':
           description: Book updated
 
-    patch:
-      summary: Update part of a book
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BookPatch'
-      responses:
-        '200':
-          description: Book updated
-
     delete:
       summary: Delete a book
       parameters:

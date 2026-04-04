@@ -11,6 +11,30 @@ app.use(express.json());
 // Middleware to enable CORS (Cross-Origin Resource Sharing)
 app.use(cors());
 
+
+/**
+ * Swagger UI setup for API documentation
+ * The Swagger document (API specification) is loaded from a YAML file named 'api-spec.yaml'.
+ * The Swagger UI is served at the '/api-docs' endpoint, allowing users to view and interact with the API documentation.
+ * 
+ * This setup allows developers to easily understand and test the API endpoints defined in the server.
+*/
+
+// Importing Swagger UI and YAML for API documentation
+const swaggerUi = require("swagger-ui-express");
+const YAML = require("yamljs");
+
+// Load the Swagger document (API specification) from a YAML file
+const swaggerDocument = YAML.load("./api-spec.yaml");
+// Serve the Swagger UI at the /api-docs endpoint, using the loaded Swagger document
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+
+/**
+ * End of Swagger UI setup
+*/
+
+
 // Server Configuration
 const HOSTNAME = "127.0.0.1";
 const PORT = "3000";
@@ -127,10 +151,6 @@ app.post("/books", (req, res) => {
   if (!hasRequiredFields(newBook)) {
     return res.status(400).json({ error: "Invalid or missing book fields" });
   };
-
-  if (!hasRequiredFields) {
-    return res.status(400).send({ error: "Missing required book fields" });
-  }
 
   // Assign a new ID to the book
   newBook.id = books.length + 1;

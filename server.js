@@ -5,14 +5,11 @@ const app = express();
 // Importing CORS middleware to handle Cross-Origin Resource Sharing
 const cors = require("cors");
 
-const cors = require("cors");
-
 // Middleware to parse JSON request bodies
 app.use(express.json());
 
 // Middleware to enable CORS (Cross-Origin Resource Sharing)
 app.use(cors());
-
 
 // Server Configuration
 const HOSTNAME = "127.0.0.1";
@@ -90,7 +87,15 @@ app.get("/books", (req, res) => {
   if (Object.keys(req.query).length === 0) {
     return res.status(200).send(books);
   } else {
-    return res.status(404).send("Logic not Implemented yet.");
+    const filteredBooks = books.filter((book) => {
+      for (let key in req.query) {
+        if (book[key] === undefined || book[key].toString() !== req.query[key]) {
+          return false;
+        }
+      }
+      return true;
+    });
+    return res.status(200).send(filteredBooks);
   }
 });
 

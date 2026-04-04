@@ -120,6 +120,11 @@ const hasRequiredFields = (book) => {
   );
 };
 
+// GET the Home Route
+app.get("/", (req, res) => {
+  res.status(200).send("Welcome to the Books API! Use /api-docs to view the API documentation.");
+});
+
 
 // GET all Books
 app.get("/books", (req, res) => {

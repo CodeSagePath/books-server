@@ -149,6 +149,21 @@ app.get("/books/:id", (req, res) => {
   return res.status(200).send(book);
 });
 
+// Delete a Book by ID
+app.delete("/books/:id", (req, res) => {
+  const bookIndex = books.findIndex((elem) => elem.id === Number(req.params.id));
+
+  if (bookIndex === -1) {
+    return res.status(404).send({ error: "Book not found" });
+  }
+
+  // Remove the book from the array
+  const deletedBook = books.splice(bookIndex, 1);
+
+  // Return the deleted book
+  return res.status(200).send(deletedBook[0]);
+});
+
 // Starting the server
 app.listen(PORT, HOSTNAME, () => {
   console.log(`Server is running at http://${HOSTNAME}:${PORT}/`);

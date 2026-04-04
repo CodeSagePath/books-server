@@ -6,7 +6,6 @@ info:
   description: Basic CRUD API for books (in-memory storage)
 
 servers:
-  - url: http://localhost:3000
   - url: https://codesagepath.duckdns.org
 
 paths:

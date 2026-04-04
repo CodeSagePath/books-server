@@ -15,6 +15,7 @@ app.use(cors());
 const HOSTNAME = "127.0.0.1";
 const PORT = "3000";
 
+
 // Sample Data
 const books = [
   {
@@ -82,6 +83,20 @@ const books = [
   },
 ];
 
+
+// Helper function to Validate the book data (basic validation)
+const hasRequiredFields = (book) => {
+  return (
+    typeof book.title === "string" &&
+    typeof book.author === "string" &&
+    typeof book.genre === "string" &&
+    typeof book.year === "number" &&
+    typeof book.rating === "number" &&
+    typeof book.available === "boolean"
+  );
+};
+
+
 // GET all Books
 app.get("/books", (req, res) => {
   if (Object.keys(req.query).length === 0) { // If there are no query parameters, return all books
@@ -104,21 +119,10 @@ app.get("/books", (req, res) => {
   }
 });
 
+
 // POST a new Book
 app.post("/books", (req, res) => {
   const newBook = req.body;
-
-  // Validate the new book data (basic validation)
-  const hasRequiredFields = (book) => {
-    return (
-      typeof book.title === "string" &&
-      typeof book.author === "string" &&
-      typeof book.genre === "string" &&
-      typeof book.year === "number" &&
-      typeof book.rating === "number" &&
-      typeof book.available === "boolean"
-    );
-  }
 
   if (!hasRequiredFields(newBook)) {
     return res.status(400).json({ error: "Invalid or missing book fields" });
@@ -138,6 +142,7 @@ app.post("/books", (req, res) => {
   return res.status(201).send(newBook);
 });
 
+
 // GET a Book by ID
 app.get("/books/:id", (req, res) => {
   const book = books.find((elem) => elem.id === Number(req.params.id));
@@ -148,6 +153,34 @@ app.get("/books/:id", (req, res) => {
 
   return res.status(200).send(book);
 });
+
+
+// PUT (Update) a Book by ID
+app.put("/books/:id", (req, res) => {
+  const bookIndex = books.findIndex((elem) => {
+    return elem.id === Number(req.params.id)
+  });
+
+  if (bookIndex === -1) {
+    return res.status(404).send({ error: "Book not found" });
+  }
+
+  const updatedBook = req.body;
+
+  // Validate the updated book data (basic validation)
+  if (!hasRequiredFields(updatedBook)) {
+    return res.status(400).send(
+      { error: "Invalid or missing book fields" }
+    );
+  };
+
+  // Update the book in the array
+  books[bookIndex] = { id: books[bookIndex].id, ...updatedBook };
+
+  // Return the updated book
+  return res.status(200).send(books[bookIndex]);
+});
+
 
 // Delete a Book by ID
 app.delete("/books/:id", (req, res) => {
@@ -163,6 +196,7 @@ app.delete("/books/:id", (req, res) => {
   // Return the deleted book
   return res.status(200).send(deletedBook[0]);
 });
+
 
 // Starting the server
 app.listen(PORT, HOSTNAME, () => {

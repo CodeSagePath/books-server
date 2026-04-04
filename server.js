@@ -1,9 +1,18 @@
-// importing dependencies
+// Simple Express server for managing courses with CORS enabled
 const express = require("express");
 const app = express();
 
+// Importing CORS middleware to handle Cross-Origin Resource Sharing
+const cors = require("cors");
+
+const cors = require("cors");
+
 // Middleware to parse JSON request bodies
 app.use(express.json());
+
+// Middleware to enable CORS (Cross-Origin Resource Sharing)
+app.use(cors());
+
 
 // Server Configuration
 const HOSTNAME = "127.0.0.1";

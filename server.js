@@ -104,6 +104,40 @@ app.get("/books", (req, res) => {
   }
 });
 
+// POST a new Book
+app.post("/books", (req, res) => {
+  const newBook = req.body;
+
+  // Validate the new book data (basic validation)
+  const hasRequiredFields = (book) => {
+    return (
+      typeof book.title === "string" &&
+      typeof book.author === "string" &&
+      typeof book.genre === "string" &&
+      typeof book.year === "number" &&
+      typeof book.rating === "number" &&
+      typeof book.available === "boolean"
+    );
+  }
+
+  if (!hasRequiredFields(newBook)) {
+    return res.status(400).json({ error: "Invalid or missing book fields" });
+  };
+
+  if (!hasRequiredFields) {
+    return res.status(400).send({ error: "Missing required book fields" });
+  }
+
+  // Assign a new ID to the book
+  newBook.id = books.length + 1;
+
+  // Add the new book to the array
+  books.push(newBook);
+
+  // Return the newly created book
+  return res.status(201).send(newBook);
+});
+
 // Starting the server
 app.listen(PORT, HOSTNAME, () => {
   console.log(`Server is running at http://${HOSTNAME}:${PORT}/`);

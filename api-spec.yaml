@@ -2,11 +2,12 @@ openapi: 3.0.3
 
 info:
   title: Simple Book API
-  version: 1.0.0
+  version: 1.0.1
   description: Basic CRUD API for books (in-memory storage)
 
 servers:
-  - url: http://codesagepath.duckdns.org
+  - url: http://localhost:3000
+  - url: https://codesagepath.duckdns.org
 
 paths:
 
